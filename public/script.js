@@ -11,9 +11,34 @@ async function login() {
 
   const result = await response.json();
   alert(result.message);
+
   if (result.users) {
-    console.log('Admin Dashboard:', result.users);
+    // Display user details in a table
+    displayUsers(result.users);
   }
+}
+
+function displayUsers(users) {
+  const userTable = `
+    <h2>Admin Dashboard</h2>
+    <table border="1">
+      <tr>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Password</th>
+      </tr>
+      ${users.map(user => `
+        <tr>
+          <td>${user.email}</td>
+          <td>${user.phone}</td>
+          <td>${user.password}</td>
+        </tr>
+      `).join('')}
+    </table>
+  `;
+
+  // Add the table to the page
+  document.body.innerHTML += userTable;
 }
 
 async function signup() {
